@@ -4,6 +4,7 @@ from BDD.utils.url_builder import URLBuilder
 from BDD.utils.schema_validator import validate_response_schema
 from BDD.data.schema.schema import create_response_schema
 from BDD.data.payload.postdata import *
+from BDD.utils.api_response_code import ResponseCode
 
 """Scenario: Verify API is reachable"""
 @given("the API client is initialized for TC_01 First Scenario")
@@ -19,8 +20,8 @@ def step_send_health_check_request(context):
 
 @then("the response status should be 200")
 def step_validate_response_status(context):
-    """Validate that the API returns a 200 status"""
-    assert context.response.status_code == 200, f"❌ API health check failed! Status: {context.response.status_code}"
+    """Validate that response return code"""
+    context.api_client.assert_stat_code(context.response, ResponseCode.OK,"Assertion Failed")
 
 
 
@@ -43,16 +44,14 @@ def step_create_user(context):
 @then("the response status should be 201")
 def step_validate_create_status(context):
     """Verify user creation status code"""
-    assert context.response.status_code == 201, "❌ User creation failed!"
+    context.api_client.assert_stat_code(context.response, ResponseCode.CREATED,"Assertion Failed")
 
 
 @then("the response schema should be valid")
 def step_validate_schema(context):
-    """Validate response schema"""
-    response_data = context.response.json()
-    validation_result = validate_response_schema(response_data, create_response_schema)
-    assert validation_result is True, validation_result  # Assert schema validation
-
+    """Use APIClient method to validate response schema"""
+    #response_data = context.response.json()
+    context.api_client.assert_schema(context.response, create_response_schema)
 
 
 """3rd Scenario"""
@@ -72,4 +71,4 @@ def step_invalid_endpoint(context):
 @then("the response status should be 404")
 def step_validate_404_status(context):
     """Validate that an invalid endpoint returns 404"""
-    assert context.response.status_code == 404, "❌ Invalid endpoint did not return 404!"
+    context.api_client.assert_stat_code(context.response, ResponseCode.NOT_FOUND,"Assertion Failed")

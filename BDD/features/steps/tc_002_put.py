@@ -5,6 +5,7 @@ from BDD.utils.url_builder import URLBuilder
 from BDD.utils.schema_validator import validate_response_schema
 from BDD.data.schema.schema import *
 from BDD.data.payload.postdata import *
+from BDD.utils.api_response_code import ResponseCode
 
 @given("the API client is initialized for TC_02 First Scenario")
 def step_initialize_api_client(context):
@@ -23,8 +24,7 @@ def step_send_put_request(context):
 @then("the response status should be 200 for TC_02 First Scenario")
 def step_validate_update_status(context):
     """Validate that the user was updated successfully"""
-    assert context.response.status_code == 200, "❌ Update Failed!"
-    print(f"✅ Response status code: {context.response.status_code}")
+    context.api_client.assert_stat_code(context.response, ResponseCode.OK,"Assertion Failed")
 
 
 @then("the response data should be updated with the correct name")
@@ -36,9 +36,5 @@ def step_validate_updated_data(context):
 
 @then("the response should match the updated schema")
 def step_validate_updated_schema(context):
-    """Validate the response schema against the expected schema"""
-    response_data = context.response.json()
-    validation_result = validate_response_schema(response_data, updated_response_schema)
-
-    assert validation_result is True, f"❌ Schema validation failed: {validation_result}"
-    print("✅ Schema validation passed!")
+    """Use APIClient method to validate response schema"""
+    context.api_client.assert_schema(context.response, updated_response_schema)

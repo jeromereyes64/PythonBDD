@@ -1,4 +1,5 @@
 import requests
+from BDD.utils.schema_validator import validate_response_schema
 
 class APIClient:
     def __init__(self, base_url, auth_token=None):
@@ -96,3 +97,17 @@ class APIClient:
         except requests.RequestException as e:
             print(f"❌ DELETE request failed: {str(e)}")
             return {"error": str(e)}
+
+
+    #Assertion Methods
+    @staticmethod
+    def assert_schema(response, expected_schema, message="Schema validation failed"):
+        """Validates API response against an expected schema"""
+        response_data = response.json()
+        validation_result = validate_response_schema(response_data, expected_schema)
+        assert validation_result is True, f"❌ {message}: {validation_result}"
+        print("✅ Schema validation passed!")
+
+    @staticmethod
+    def assert_stat_code(response, expected_status, message="Unexpected status code"):
+        assert response.status_code == expected_status, f"❌ {message} Expected: {expected_status}, Got: {response.status_code}"
