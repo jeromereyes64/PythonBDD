@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"e8a92710a0238e04d67c06c6b4096ed2","name":"GET User List, User Login and Invalid Endpoint Test","statistic":{"failed":0,"broken":0,"skipped":0,"passed":3,"unknown":0,"total":3}},{"uid":"ec8ec554cd031f6b25a1d99f49025c98","name":"Update User Endpoint","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}}]}

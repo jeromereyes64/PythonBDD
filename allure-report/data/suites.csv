@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","103","Verify API is reachable","","Fri Feb 14 22:35:56 NZDT 2025","passed","Fri Feb 14 22:35:56 NZDT 2025","","","",""
+"","676","Verify user login functionality","","Fri Feb 14 22:35:56 NZDT 2025","passed","Fri Feb 14 22:35:56 NZDT 2025","","","",""
+"","628","Verify user can be updated successfully","","Fri Feb 14 22:35:57 NZDT 2025","passed","Fri Feb 14 22:35:58 NZDT 2025","","","",""
+"","664","Verify API handles invalid endpoint","","Fri Feb 14 22:35:56 NZDT 2025","passed","Fri Feb 14 22:35:57 NZDT 2025","","","",""
