@@ -65,6 +65,6 @@ def step_validate_updated_schema(context):
     context.api_client.assert_schema(context.response, get_invalid_user_response_schema)
 
 @step("the response time should be less than 2 seconds for TC_03 Second Scenario")
-def step_impl(context):
+def step_validate_response_schema(context):
     """Validate API response time"""
     context.api_client.assert_response_time(context.response)
