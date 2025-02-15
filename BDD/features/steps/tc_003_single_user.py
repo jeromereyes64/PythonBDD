@@ -17,7 +17,7 @@ def step_send_get_request(context):
     """Send a GET request to the health check endpoint"""
     endpoint = URLBuilder.format(Endpoints.USERS, user_id= global_store.first_user_id)
     context.response = context.api_client.get(endpoint)
-    print(f"📢 Fetching user details for ID: {global_store.first_user_id}")
+    print(f"Fetching user details for ID: {global_store.first_user_id}")
 
 
 @then("the response status should be 200 for TC_03 First Scenario")
@@ -50,7 +50,7 @@ def step_send_get_request(context):
     """Send a GET request to the health check endpoint"""
     endpoint = URLBuilder.format(Endpoints.USERS, user_id= global_store.invalid_user_id)
     context.response = context.api_client.get(endpoint)
-    print(f"📢 Fetching user details for ID: {global_store.invalid_user_id}")
+    print(f"Fetching user details for ID: {global_store.invalid_user_id}")
 
 
 @then("the response status should be 400 for TC_03 Second Scenario")

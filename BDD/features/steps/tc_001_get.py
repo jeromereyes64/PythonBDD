@@ -22,10 +22,10 @@ def step_send_health_check_request(context):
     # Fetch the first ID from the "data" array
     if "data" in response_data and response_data["data"]:
         global_store.first_user_id = response_data["data"][0]["id"]
-        print(f"✅ Extracted Test Data First User ID: {global_store.first_user_id}")
+        print(f"Extracted Test Data First User ID: {global_store.first_user_id}")
     else:
         global_store.first_user_id = None
-        print("❌ No user data found in response")
+        print("No user data found in response")
 
 @then("the response status should be 200")
 def step_validate_response_status(context):
@@ -46,8 +46,8 @@ def step_create_user(context):
     """Send a POST request to create a new user"""
 
     context.response = context.api_client.post(Endpoints.USERS, create_user_payload)
-    print(f"📨 Request URL: {context.api_client.base_url}{Endpoints.USERS}")
-    print(f"📄 Response: {context.response.text}")
+    print(f"Request URL: {context.api_client.base_url}{Endpoints.USERS}")
+    print(f"Response: {context.response.text}")
 
 
 @then("the response status should be 201")
@@ -74,7 +74,7 @@ def step_initialize_api_client(context):
 def step_invalid_endpoint(context):
     """Send a GET request to a non-existing endpoint"""
     context.response = context.api_client.get(Endpoints.INVALID)
-    print(f"📢 Invalid endpoint test: {context.api_client.base_url}{Endpoints.INVALID}")
+    print(f"Invalid endpoint test: {context.api_client.base_url}{Endpoints.INVALID}")
 
 
 @then("the response status should be 404")

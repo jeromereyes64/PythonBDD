@@ -28,7 +28,7 @@ def step_validate_update_status(context):
 def step_validate_updated_data(context):
     """Validate the updated data in the response"""
     response_data = context.response.json()
-    assert response_data["name"] == "neo", f"❌ Expected name 'neo', but got {response_data['name']}"
+    assert response_data["name"] == "neo", f"Expected name 'neo', but got {response_data['name']}"
 
 
 @then("the response should match the updated schema")

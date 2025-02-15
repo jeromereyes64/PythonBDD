@@ -24,4 +24,4 @@ def before_all(context):
     context.config = configs[context.env]
     context.api_client = APIClient(base_url=context.config["base_url"], auth_token=context.config["auth_token"])
     print(context.api_client.base_url)
-    print(f"✅ Running tests in {context.env.upper()} environment.")
+    print(f"Running tests in {context.env.upper()} environment.")
