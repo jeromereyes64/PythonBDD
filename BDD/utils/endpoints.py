@@ -1,5 +1,5 @@
 class Endpoints:
-    USERS = "users"
+    USERS = "users/{user_id}"
     LOGIN = "auth/login"
     HEALTH_CHECK = "users?page={page}"
     INVALID = "test/invalid_endpoint"

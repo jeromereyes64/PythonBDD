@@ -1,8 +1,6 @@
-import json
 from behave import given, when, then
 from BDD.utils.endpoints import Endpoints
 from BDD.utils.url_builder import URLBuilder
-from BDD.utils.schema_validator import validate_response_schema
 from BDD.data.schema.schema import *
 from BDD.data.payload.postdata import *
 from BDD.utils.api_response_code import ResponseCode
@@ -38,3 +36,9 @@ def step_validate_updated_data(context):
 def step_validate_updated_schema(context):
     """Use APIClient method to validate response schema"""
     context.api_client.assert_schema(context.response, updated_response_schema)
+
+
+@then("the response time should be less than 2 seconds")
+def step_validate_response_schema(context):
+    """Validate API response time"""
+    context.api_client.assert_response_time(context.response)

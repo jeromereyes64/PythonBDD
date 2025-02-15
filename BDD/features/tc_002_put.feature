@@ -8,3 +8,4 @@ Feature: Update User Endpoint
     Then the response status should be 200 for TC_02 First Scenario
     And the response data should be updated with the correct name
     And the response should match the updated schema
+    And the response time should be less than 2 seconds

@@ -1,9 +1,9 @@
 from behave import given, when, then
 from BDD.utils.endpoints import Endpoints
 from BDD.utils.url_builder import URLBuilder
-from BDD.utils.schema_validator import validate_response_schema
 from BDD.data.schema.schema import create_response_schema
 from BDD.data.payload.postdata import *
+from BDD.data import global_store
 from BDD.utils.api_response_code import ResponseCode
 
 """Scenario: Verify API is reachable"""
@@ -17,6 +17,16 @@ def step_send_health_check_request(context):
     """Send a GET request to the health check endpoint"""
     endpoint = URLBuilder.format(Endpoints.HEALTH_CHECK, page=2)
     context.response = context.api_client.get(endpoint)
+    # Extract JSON response
+    response_data = context.response.json()
+
+    # Fetch the first ID from the "data" array
+    if "data" in response_data and response_data["data"]:
+        context.first_user_id = response_data["data"][0]["id"]
+        print(f"✅ Extracted Test Data First User ID: {global_store.first_user_id}")
+    else:
+        global_store.first_user_id = None
+        print("❌ No user data found in response")
 
 @then("the response status should be 200")
 def step_validate_response_status(context):
