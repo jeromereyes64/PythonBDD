@@ -96,4 +96,9 @@ get_single_user_response_schema = {
   ]
 }
 
+#Invalid Single User GET
+get_invalid_user_response_schema = {
+  "type": "object"
+}
+
 # Add more schemas here as variables, following the same pattern

@@ -17,3 +17,16 @@ class ResponseCode:
     BAD_GATEWAY = 502  # Invalid response from upstream server
     SERVICE_UNAVAILABLE = 503  # Server temporarily overloaded or under maintenance
     GATEWAY_TIMEOUT = 504  # Upstream server timeout
+
+class Endpoints:
+    USERS = "users/{user_id}"
+    LOGIN = "auth/login"
+    HEALTH_CHECK = "users?page={page}"
+    INVALID = "test/invalid_endpoint"
+    CREATE_USER = "users"
+    UPDATE_USER = "users/{user_id}"
+    DELETE_USER = "users/{user_id}"
+
+class QueryParams:
+    HEALTH_CHECK = {"page": 2}
+    USERS_FILTER = {"status": "active", "role": "admin"}

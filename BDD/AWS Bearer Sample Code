@@ -1,0 +1,73 @@
+config.json
+{
+    "qa": {
+        "base_url": "https://reqres.in/api/",
+        "aws_access_key_id": "your_aws_access_key_id",
+        "aws_secret_access_key": "your_aws_secret_access_key"
+    },
+    "uat": {
+        "base_url": "https://reqres.in/api/uat/",
+        "aws_access_key_id": "your_aws_access_key_id",
+        "aws_secret_access_key": "your_aws_secret_access_key"
+    }
+}
+
+
+environment.py
+import os
+import json
+import boto3
+from BDD.src.api_client import APIClient
+
+# Behave automatically calls this function once before executing any test scenario.
+def before_all(context):
+    """Load environment configuration before tests start."""
+
+    # Get environment from command line argument or default to 'qa'
+    context.env = os.getenv("ENV", "qa")
+
+    # Load configuration file
+    config_file = os.path.join(os.path.dirname(__file__), "../utils/config.json")
+
+    with open(config_file, "r") as file:
+        configs = json.load(file)
+
+    # Validate environment
+    if context.env not in configs:
+        raise ValueError(f"Invalid environment: {context.env}. Use 'qa' or 'uat'.")
+
+    # Store config
+    context.config = configs[context.env]
+
+    # Get AWS credentials from config
+    aws_access_key_id = context.config.get("aws_access_key_id")
+    aws_secret_access_key = context.config.get("aws_secret_access_key")
+
+    if not aws_access_key_id or not aws_secret_access_key:
+        raise ValueError("AWS credentials are missing from the config.")
+
+    # Initialize a boto3 client to interact with AWS STS
+    sts_client = boto3.client(
+        "sts",
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key
+    )
+
+    # Fetch temporary credentials (Session Token)
+    response = sts_client.get_session_token(DurationSeconds=3600)  # Valid for 1 hour
+    session_token = response['Credentials']['SessionToken']
+
+    # Store the credentials for use in the test
+    context.aws_credentials = {
+        "aws_access_key_id": aws_access_key_id,
+        "aws_secret_access_key": aws_secret_access_key,
+        "session_token": session_token  # Temporary session token for Bearer Auth
+    }
+
+    # Initialize the API client with base URL and Bearer token (Session Token)
+    context.api_client = APIClient(
+        base_url=context.config["base_url"],
+        auth_token=session_token  # Using session token as the Bearer token
+    )
+
+    print(f"✅ Running tests in {context.env.upper()} environment with AWS Bearer token authentication.")

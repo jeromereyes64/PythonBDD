@@ -1,9 +1,8 @@
 from behave import given, when, then
-from BDD.utils.endpoints import Endpoints
+from BDD.utils.api_constants import *
 from BDD.utils.url_builder import URLBuilder
 from BDD.data.schema.schema import *
 from BDD.data.payload.postdata import *
-from BDD.utils.api_response_code import ResponseCode
 
 @given("the API client is initialized for TC_02 First Scenario")
 def step_initialize_api_client(context):

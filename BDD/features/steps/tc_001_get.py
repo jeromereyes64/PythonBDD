@@ -1,10 +1,9 @@
 from behave import given, when, then
-from BDD.utils.endpoints import Endpoints
+from BDD.utils.api_constants import *
 from BDD.utils.url_builder import URLBuilder
 from BDD.data.schema.schema import create_response_schema
 from BDD.data.payload.postdata import *
 from BDD.data import global_store
-from BDD.utils.api_response_code import ResponseCode
 
 """Scenario: Verify API is reachable"""
 @given("the API client is initialized for TC_01 First Scenario")
@@ -22,7 +21,7 @@ def step_send_health_check_request(context):
 
     # Fetch the first ID from the "data" array
     if "data" in response_data and response_data["data"]:
-        context.first_user_id = response_data["data"][0]["id"]
+        global_store.first_user_id = response_data["data"][0]["id"]
         print(f"✅ Extracted Test Data First User ID: {global_store.first_user_id}")
     else:
         global_store.first_user_id = None
