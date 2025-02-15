@@ -106,14 +106,14 @@ class APIClient:
         response_data = response.json()
         validation_result = validate_response_schema(response_data, expected_schema)
         assert validation_result is True, f"{message}: {validation_result}"
-        print("✅ Schema validation passed!")
+        print("Schema validation passed!")
 
     @staticmethod
     def assert_response_time(response, max_time=2.0):
         """Validates that the API response time is within an acceptable limit (default 2 seconds)"""
         response_time = response.elapsed.total_seconds()
         assert response_time < max_time, f"Response time exceeded! Expected < {max_time}s, but got {response_time}s"
-        print(f"✅ Response time is within limit: {response_time}s")
+        print(f"Response time is within limit: {response_time}s")
 
 
     @staticmethod
